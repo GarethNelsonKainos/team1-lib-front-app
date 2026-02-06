@@ -3,6 +3,10 @@ import { Request, Response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import nunjucks from 'nunjucks';
+import dotenv from 'dotenv';
+import homeRouter from './routes/home.js';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,7 +15,6 @@ const projectRoot = path.resolve(__dirname, '..');
 const appViews = path.join(__dirname, 'views');
 
 const app = express();
-const port = 3000;
 
 const nunjucksConfig = {
   autoescape: true,
@@ -20,7 +23,7 @@ const nunjucksConfig = {
 };
 
 app.set('view engine', 'njk');
-app.set('views', appViews);
+app.set('views', path.join(__dirname, 'views'));
 
 const nunjucksEnv = nunjucks.configure(
   [appViews, path.join(projectRoot, 'node_modules/govuk-frontend/dist')],
@@ -28,9 +31,7 @@ const nunjucksEnv = nunjucks.configure(
 );
 nunjucksEnv.addGlobal('govukRebrand', true);
 
-app.get('/', (req: Request, res: Response) => {
-    res.render('home');
-});
+app.use('/', homeRouter);
 
 app.use('/govuk', express.static(
   path.join(projectRoot, 'node_modules/govuk-frontend/dist/govuk')
@@ -40,6 +41,6 @@ app.use('/assets', express.static(
   path.join(projectRoot, 'node_modules/govuk-frontend/dist/govuk/assets')
 ));
 
-app.listen(3000, () => {
-    console.log(`App listening on port ${port}`)
+app.listen(process.env.PORT, () => {
+    console.log(`App listening on port ${process.env.PORT}`);
 });
