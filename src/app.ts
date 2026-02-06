@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const projectRoot = path.resolve(__dirname, '..');
-const appViews = path.join(__dirname, 'views');
+const appViews = path.join(projectRoot, 'src', 'views');
 
 const app = express();
 
@@ -23,7 +23,10 @@ const nunjucksConfig = {
 };
 
 app.set('view engine', 'njk');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', appViews);
+
+console.log('Views directory:', appViews);
+console.log('__dirname:', __dirname);
 
 const nunjucksEnv = nunjucks.configure(
   [appViews, path.join(projectRoot, 'node_modules/govuk-frontend/dist')],
@@ -41,6 +44,7 @@ app.use('/assets', express.static(
   path.join(projectRoot, 'node_modules/govuk-frontend/dist/govuk/assets')
 ));
 
-app.listen(process.env.PORT, () => {
-    console.log(`App listening on port ${process.env.PORT}`);
+const PORT = parseInt(process.env.PORT || '3000', 10);
+app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
 });
