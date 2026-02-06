@@ -1,0 +1,28 @@
+{
+  "name": "team1-lib-front-app",
+  "version": "1.0.0",
+  "description": "Team 1 Library Frontend Application Feb/Marc 2026",
+  "main": "app.js",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js"
+  },
+  "keywords": [],
+  "author": "Team 1",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/nunjucks": "^3.2.6",
+    "express": "^5.2.1",
+    "govuk-frontend": "^5.14.0",
+    "nunjucks": "^3.2.4",
+    "dotenv": "^17.2.3"
+  }
+}
